@@ -1,0 +1,82 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+	<h:form
+		id="sellForm"
+		enctype="multipart/form-data">
+		<p:growl for="sellForm"/>
+		<f:facet name="header">
+			<h:outputText value="#{msg['sell']}"/>
+		</f:facet>
+		<p:panelGrid>
+			<p:row>				
+				<p:column>
+					<p:outputLabel value="#{msg['item.title']}:"/>
+				</p:column>
+				<p:column>
+					<p:inputText
+						id="title" 
+						value="#{sellController.item.title}"/>
+				</p:column>
+				<p:column rowspan="5" style="width: 600px;">
+					<h:graphicImage
+						rendered="#{not empty sellController.item.id}" 
+						url="image?id=#{sellController.item.id}"/>
+				</p:column>
+			</p:row>
+			<p:row>				
+				<p:column>
+					<p:outputLabel value="#{msg['item.description']}:"/>
+				</p:column>
+				<p:column>
+					<p:inputTextarea
+						rows="10"
+						id="description" 
+						value="#{sellController.item.description}"/>
+				</p:column>
+			</p:row>
+			<p:row>				
+				<p:column>
+					<p:outputLabel value="#{msg['item.price']}:"/>
+				</p:column>
+				<p:column>
+					<p:inputText
+						id="price" 
+						value="#{sellController.item.price}"/>
+				</p:column>
+			</p:row>
+			<p:row>				
+				<p:column>
+					<p:outputLabel value="#{msg['item.foto']}:"/>
+				</p:column>
+				<p:column>
+					<p:fileUpload
+						id="foto" 
+						value="#{sellController.file}"
+						mode="simple"
+						skinSimple="true"/>
+				</p:column>
+			</p:row>
+			<p:row>				
+				<p:column>
+					<p:commandButton
+						id="sell" 
+						action="#{sellController.persist(signinController)}" 
+						value="#{msg['sell']}"
+						ajax="false"/>             
+				</p:column>
+				<p:column>
+					<p:commandButton 
+						action="index" 
+						value="#{msg['cancel']}"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</ui:define>
+</ui:composition>
+

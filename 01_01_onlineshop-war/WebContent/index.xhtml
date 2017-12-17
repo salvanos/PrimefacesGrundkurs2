@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Onlineshop</title>
+	</f:facet>
+</h:head>
+<h:body>
+	<h:form id="eingabe">
+		<p:growl id="message" showDetail="true"/>
+		<p:panelGrid columns="2">
+			<p:outputLabel 
+				for="@next"
+				value="E-Mail:"/>
+			<p:inputText 
+				id="email" 
+				value="#{signinController.customer.email}"
+				required="true"
+				title="Bitte geben Sie Ihre E-Mail ein (4-40 Zeichen)"
+				maxlength="40">
+				<f:validateLength
+					minimum="4"
+					maximum="40"
+					for="email"/>
+				<p:clientValidator event="keyup"/>
+			</p:inputText>
+			<p:outputLabel
+				for="@next" 
+				value="Kennwort:"/>
+			<p:password 
+				id="password" 
+				value="#{signinController.customer.password}"
+				required="true"
+				title="Bitte geben Sie Ihr Kennwort ein (4-40 Zeichen)"
+				maxlength="40">
+				<f:validateLength
+					minimum="4"
+					maximum="40"
+					for="password"/>
+				<p:clientValidator event="keyup"/>
+			</p:password>
+			<p:commandButton
+				value="Anmelden"
+				validateClient="true"
+				action="#{signinController.find}"
+				update="message"/>
+			<p:commandButton
+				value="Benutzerdaten"
+				actionListener="#{signinController.showCustomer}"/>
+		</p:panelGrid>
+		<p:focus context="eingabe" for="email"/>
+	</h:form>
+</h:body>
+</f:view>
+</html>

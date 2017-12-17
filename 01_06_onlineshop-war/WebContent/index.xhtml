@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Onlineshop</title>
+	</f:facet>
+</h:head>
+<h:body>
+	<h:form id="eingabe">
+		<p:panelGrid columns="2">
+			<p:outputLabel 
+				for="@next"
+				value="E-Mail:"/>
+			<p:inputText 
+				id="email" 
+				value="#{signinController.customer.email}"/>
+			<p:outputLabel
+				for="@next" 
+				value="Kennwort:"/>
+			<p:password 
+				id="password" 
+				value="#{signinController.customer.password}"/>
+			<p:outputLabel
+				for="@next" 
+				value="Kommentar zum Catering:"/>
+			<p:inputTextarea 
+				id="comment" 
+				value="#{signinController.customer.comment}"
+				rows="5"
+				cols="40"
+				autoResize="false"
+				maxlength="30"
+				counterTemplate="Noch {0} Zeichen erlaubt!"
+				counter="counter"/>
+			<p:commandButton
+				value="Anmelden"
+				validateClient="true"
+				action="#{signinController.find}"
+				update="ausgabe">
+				<p:collector 
+					unique="true" 
+					value="#{signinController.customer}"
+					addTo="#{signinController.customers}"/>
+			</p:commandButton>
+			<p:commandButton
+				value="Benutzerdaten"
+				id="benutzerdaten"/>
+		</p:panelGrid>
+		<p:focus context="eingabe" for="email"/>
+		<p:outputLabel id="counter"/>
+		<p:overlayPanel for="benutzerdaten">
+			<p:dataTable 
+				id="ausgabe"
+				value="#{signinController.customers}"
+				var="customer"
+				paginator="true"
+				rows="3">
+				<p:column headerText="E-Mail">
+					<h:outputText value="#{customer.email}"/>
+				</p:column>
+				<p:column headerText="Kennwort">
+					<h:outputText value="#{customer.password}"/>
+				</p:column>
+				<p:column headerText="Kommentar zum Catering">
+					<h:outputText value="#{customer.comment}"/>
+				</p:column>
+				<p:column headerText="Entfernen">
+					<p:commandLink 
+						value="Entfernen"
+						update="ausgabe">
+						<p:collector 
+							unique="true" 
+							value="#{customer}"
+							removeFrom="#{signinController.customers}"/>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</p:overlayPanel>
+	</h:form>
+</h:body>
+</f:view>
+</html>

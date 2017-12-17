@@ -1,0 +1,35 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<ui:define name="content">
+	<h:form
+		id="signinForm">
+		<p:panelGrid columns="3">
+			<f:facet name="header">
+				<h:outputText value="#{msg['signin']}"/>
+			</f:facet>
+			<p:outputLabel value="#{msg['email']}:"/>
+			<p:inputText
+				id="email" 
+				value="#{signinController.email}"/>
+			<p:message for="email"/>	
+			<p:outputLabel value="#{msg['password']}:"/>
+			<p:password
+				id="password" 
+				value="#{signinController.password}"/>
+			<p:message for="password"/>	
+			<p:commandButton
+				id="signin" 
+				action="#{signinController.find}" 
+				value="#{msg['signin']}"
+				update="@('header') signinGrowl"/>             
+			<p:commandButton action="index" value="#{msg['cancel']}"/>
+			<p:growl id="signinGrowl" for="signinForm"/>
+		</p:panelGrid>
+	</h:form>
+</ui:define>
+</ui:composition>
+
